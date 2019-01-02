@@ -7,6 +7,7 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 /**
   * Created by Jason on 2018/12/28.
   */
+
 object ScalaKafkaProducer {
 
   def getProducer(): KafkaProducer[String, String] ={
