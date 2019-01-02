@@ -1,13 +1,6 @@
 package com.ai.kafka
 
-import java.util.List
 import java.util.Properties
-import java.util.UUID
-import java.util.concurrent.ExecutionException
-
-import kafka.producer.KeyedMessage
-//import org.apache.hadoop.mapred.lib.HashPartitioner
-
 import scala.util.Random
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 
