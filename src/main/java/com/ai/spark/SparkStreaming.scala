@@ -12,7 +12,7 @@ object SparkStreaming {
 
   private val brokers = "192.168.65.130:9092,192.168.65.130:9092,192.168.65.130:9092"
 
-  def run(): Unit ={
+  def run(): Unit = {
     val conf = new SparkConf().setMaster("local[4]").setAppName("NetworkWordCount")
     val ctx = new SparkContext(conf)
     ctx.setLogLevel("WARN")
@@ -20,7 +20,7 @@ object SparkStreaming {
 
     val topics=Array("test")
     val kafkaParams=Map[String,Object](
-      "bootstrap.servers"->brokers,
+      "bootstrap.servers" -> brokers,
       "key.deserializer" -> classOf[StringDeserializer],
       "value.deserializer" -> classOf[StringDeserializer],
       "group.id" -> "test",
@@ -36,7 +36,7 @@ object SparkStreaming {
     )
 
     val lines=messages.map(record => record.value)
-    val wordCounts = lines.map(x=>{
+    val wordCounts = lines.map(x => {
       (x,1)
     }).reduceByKey(_ + _)
 
