@@ -1,6 +1,0 @@
-# Created by .ignore support plugin (hsz.mobi)
-/.gitignore
-/target/
-spark-warehouse/
-src/test/
-/src/main/resources/kafka.properties
