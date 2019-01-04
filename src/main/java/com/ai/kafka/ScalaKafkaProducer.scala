@@ -11,10 +11,11 @@ import com.ai.utils.PropUtil
 
 object ScalaKafkaProducer {
 
+  private val prop:Properties = PropUtil.getProps("kafka.properties")
+
   def getProducer(): KafkaProducer[String, String] ={
-    val prop:Properties = PropUtil.getProps("kafka.properties")
-    //val ip:String =  prop.getProperty("HOST_IP")
-    val brokers = "ip:9092,ip:9093,ip:9094".replaceAll("ip",prop.getProperty("HOST_IP"))
+    val brokers:String = "ip:9092,ip:9093".replaceAll("ip",prop.getProperty("HOST_IP"))
+    println("brokers: "+brokers)
     val props = new Properties()
     props.put("bootstrap.servers", brokers)
     props.put("serializer.class", "kafka.serializer.StringEncoder")
@@ -31,9 +32,10 @@ object ScalaKafkaProducer {
   def produce(): Unit = {
     val data = Array("a", "b", "c", "d", "e")
     val producer = getProducer()
+    val topic = prop.getProperty("TOPIC")
     while (true) {
       val rnd: Int = (new Random).nextInt(5)
-      val record: ProducerRecord[String, String] = new ProducerRecord("test2", data(rnd))
+      val record: ProducerRecord[String, String] = new ProducerRecord(topic, data(rnd))
       producer.send(record)
       Thread.sleep(10)
     }

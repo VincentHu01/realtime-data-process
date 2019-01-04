@@ -15,22 +15,27 @@ object SparkStreaming {
 
   private val prop = PropUtil.getProps("kafka.properties")
 
-  private val brokers = "ip:9092,ip:9093,ip:9094".replaceAll("ip",prop.getProperty("HOST_IP"))
-
   def run(): Unit = {
     val conf = new SparkConf().setMaster("local[4]").setAppName("NetworkWordCount")
     val ctx = new SparkContext(conf)
     ctx.setLogLevel("WARN")
     val ssc = new StreamingContext(ctx, Seconds(5))
-    val topics=Array(prop.getProperty("TOPIC"))
+    val zookeeper = "ip:2181,ip:2182".replaceAll("ip",prop.getProperty("HOST_IP"))
+    //val zookeeper = "10.135.13.1:2181,10.135.13.1:2182"
+    println("zookeeper: "+ zookeeper)
+
     val kafkaParams=Map[String,Object](
-      "bootstrap.servers" -> brokers,
+      "bootstrap.servers" -> zookeeper,
       "key.deserializer" -> classOf[StringDeserializer],
       "value.deserializer" -> classOf[StringDeserializer],
-      "group.id" -> "test",
+      "group.id" -> "group1",
       "auto.offset.reset" -> "latest",
       "enable.auto.commit" -> (false: java.lang.Boolean)
     )
+    val topics=Array(prop.getProperty("TOPIC"))
+    println("topics: ")
+    topics.foreach(println)
+
     val consumer = ConsumerStrategies.Subscribe[String, String](topics, kafkaParams)
     val messages = KafkaUtils.createDirectStream(
       ssc,

@@ -9,7 +9,7 @@ public class ThreadConsumer implements Runnable {
 
     @Override
     public void run(){
-        System.out.print("start consumer");
+        System.out.println("start consumer");
         SparkStreaming.run();
     }
 }
