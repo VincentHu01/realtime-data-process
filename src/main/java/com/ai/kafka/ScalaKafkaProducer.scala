@@ -3,6 +3,7 @@ package com.ai.kafka
 import java.util.Properties
 import scala.util.Random
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
+import com.ai.utils.PropUtil
 
 /**
   * Created by Jason on 2018/12/28.
@@ -11,7 +12,9 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 object ScalaKafkaProducer {
 
   def getProducer(): KafkaProducer[String, String] ={
-    val brokers = "192.168.65.130:9092,192.168.65.130:9093,192.168.65.130:9094"
+    val prop:Properties = PropUtil.getProps("kafka.properties")
+    //val ip:String =  prop.getProperty("HOST_IP")
+    val brokers = "ip:9092,ip:9093,ip:9094".replaceAll("ip",prop.getProperty("HOST_IP"))
     val props = new Properties()
     props.put("bootstrap.servers", brokers)
     props.put("serializer.class", "kafka.serializer.StringEncoder")
@@ -30,9 +33,9 @@ object ScalaKafkaProducer {
     val producer = getProducer()
     while (true) {
       val rnd: Int = (new Random).nextInt(5)
-      val record: ProducerRecord[String, String] = new ProducerRecord("test", data(rnd))
+      val record: ProducerRecord[String, String] = new ProducerRecord("test2", data(rnd))
       producer.send(record)
-      Thread.sleep(500)
+      Thread.sleep(10)
     }
   }
 
