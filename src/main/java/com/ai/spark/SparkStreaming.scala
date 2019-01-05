@@ -20,23 +20,42 @@ object SparkStreaming {
     val ctx = new SparkContext(conf)
     ctx.setLogLevel("WARN")
     val ssc = new StreamingContext(ctx, Seconds(5))
-    val zookeeper = "ip:2181,ip:2182".replaceAll("ip",prop.getProperty("HOST_IP"))
-    //val zookeeper = "10.135.13.1:2181,10.135.13.1:2182"
+    //var zookeeper = "ip:2181,ip:2182".replaceAll("ip",prop.getProperty("HOST_IP"))
+    val zookeeper =  "PLAINTEXT://192.112.130.181:9092"
     println("zookeeper: "+ zookeeper)
 
-    val kafkaParams=Map[String,Object](
-      "bootstrap.servers" -> zookeeper,
-      "key.deserializer" -> classOf[StringDeserializer],
-      "value.deserializer" -> classOf[StringDeserializer],
-      "group.id" -> "group1",
-      "auto.offset.reset" -> "latest",
-      "enable.auto.commit" -> (false: java.lang.Boolean)
+    val props: Properties = new Properties
+    props.put("bootstrap.servers", "193.112.130.181:9092")
+    props.put("group.id", "test")
+    props.put("enable.auto.commit", "true")
+    props.put("auto.commit.interval.ms", "1000")
+    props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
+    props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
+
+//    val kafkaParams = Map[String,Object](
+//      "bootstrap.servers" -> zookeeper,
+//      //"broker.list"->"master:9092",
+//      "key.deserializer" -> classOf[StringDeserializer],
+//      "value.deserializer" -> classOf[StringDeserializer],
+//      //"group.id" -> "group1",
+//      "auto.offset.reset" -> "latest",
+//      "enable.auto.commit" -> (false: java.lang.Boolean)
+//    )
+
+    val kafkaParams2 = Map[String,Object](
+      "bootstrap.servers" -> "193.112.130.181:9092",
+      "group.id"-> "test",
+      "enable.auto.commit"-> "true",
+      "auto.commit.interval.ms"->"1000",
+      "key.deserializer"->"org.apache.kafka.common.serialization.StringDeserializer",
+      "value.deserializer"->"org.apache.kafka.common.serialization.StringDeserializer"
     )
+
     val topics=Array(prop.getProperty("TOPIC"))
     println("topics: ")
     topics.foreach(println)
 
-    val consumer = ConsumerStrategies.Subscribe[String, String](topics, kafkaParams)
+    val consumer = ConsumerStrategies.Subscribe[String, String](topics, kafkaParams2)
     val messages = KafkaUtils.createDirectStream(
       ssc,
       LocationStrategies.PreferConsistent,

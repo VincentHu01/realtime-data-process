@@ -15,7 +15,7 @@ object ScalaKafkaProducer {
 
   def getProducer(): KafkaProducer[String, String] ={
     val brokers:String = "ip:9092,ip:9093".replaceAll("ip",prop.getProperty("HOST_IP"))
-    println("brokers: "+brokers)
+    //println("brokers: "+brokers)
     val props = new Properties()
     props.put("bootstrap.servers", brokers)
     props.put("serializer.class", "kafka.serializer.StringEncoder")
