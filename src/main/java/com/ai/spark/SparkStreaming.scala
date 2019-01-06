@@ -28,7 +28,7 @@ object SparkStreaming {
     val conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount")
     val ctx = new SparkContext(conf)
     ctx.setLogLevel("WARN")
-    val ssc = new StreamingContext(ctx, Seconds(5))
+    val ssc = new StreamingContext(ctx, Seconds(15))
     //var zookeeper = "ip:2181,ip:2182".replaceAll("ip",prop.getProperty("HOST_IP"))
     val brokers:String = "ip:9092,ip:9093".replaceAll("ip",prop.getProperty("HOST_IP"))
     println("brokers: "+ brokers)

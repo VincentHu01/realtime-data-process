@@ -37,7 +37,7 @@ object ScalaKafkaProducer {
       val rnd: Int = (new Random).nextInt(5)
       val record: ProducerRecord[String, String] = new ProducerRecord(topic, data(rnd))
       producer.send(record)
-      Thread.sleep(10)
+      Thread.sleep(3000)
     }
   }
 
