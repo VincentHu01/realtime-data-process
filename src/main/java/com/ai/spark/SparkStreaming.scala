@@ -32,12 +32,13 @@ object SparkStreaming {
     //var zookeeper = "ip:2181,ip:2182".replaceAll("ip",prop.getProperty("HOST_IP"))
     val brokers:String = "ip:9092,ip:9093".replaceAll("ip",prop.getProperty("HOST_IP"))
     println("brokers: "+ brokers)
+    val groupId = prop.getProperty("GROUP_ID")
 
-    val kafkaParams2 = Map[String,Object](
+    val kafkaParams = Map[String,Object](
       "bootstrap.servers" -> brokers,
-      "group.id"-> "test",
-      "enable.auto.commit"-> (true: java.lang.Boolean),
-      "auto.offset.reset" -> "earliest",
+      "group.id" -> groupId,
+      "enable.auto.commit"-> (false: java.lang.Boolean),
+      "auto.offset.reset" -> "latest",
       "auto.commit.interval.ms"->"1000",
       "key.deserializer"->"org.apache.kafka.common.serialization.StringDeserializer",
       "value.deserializer"->"org.apache.kafka.common.serialization.StringDeserializer"
@@ -47,7 +48,7 @@ object SparkStreaming {
     println("topics: ")
     topics.foreach(println)
 
-    val consumer = ConsumerStrategies.Subscribe[String, String](topics, kafkaParams2)
+    val consumer = ConsumerStrategies.Subscribe[String, String](topics, kafkaParams)
     val messages = KafkaUtils.createDirectStream[String,String](
       ssc,
       LocationStrategies.PreferConsistent,

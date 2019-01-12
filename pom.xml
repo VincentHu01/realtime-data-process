@@ -16,6 +16,9 @@
         <scala.binary.version>2.11</scala.binary.version>
         <scala.version>2.11.8</scala.version>
         <slf4j-version>1.7.20</slf4j-version>
+        <scalikejdbc.version>2.5.2</scalikejdbc.version>
+        <mysql.version>5.1.46</mysql.version>
+
     </properties>
 
     <dependencies>
@@ -86,6 +89,39 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j-version}</version>
+        </dependency>
+
+        <!--mysql-->
+        <dependency>
+            <groupId>org.scalikejdbc</groupId>
+            <artifactId>scalikejdbc_2.11</artifactId>
+            <version>${scalikejdbc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scalikejdbc</groupId>
+            <artifactId>scalikejdbc-config_2.11</artifactId>
+            <version>${scalikejdbc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.5</version>
         </dependency>
 
     </dependencies>
