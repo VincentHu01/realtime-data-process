@@ -10,6 +10,7 @@ public class ThreadProducer implements Runnable {
 
     @Override
     public void run(){
+        System.out.println("start producer");
         ScalaKafkaProducer.produce();
     }
 

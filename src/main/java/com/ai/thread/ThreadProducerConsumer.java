@@ -12,7 +12,7 @@ public class ThreadProducerConsumer {
         Thread threadConsumer = new Thread(consumer);
         Thread threadProducer = new Thread(producer);
 
-        threadProducer.start();
         threadConsumer.start();
+        threadProducer.start();
     }
 }
